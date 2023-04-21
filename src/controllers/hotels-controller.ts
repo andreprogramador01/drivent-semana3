@@ -13,6 +13,8 @@ export async function getHotels(req: AuthenticatedRequest, res: Response) {
   } catch (error) {
     if (error.name === 'NotFoundError') {
       res.status(httpStatus.NOT_FOUND).send({});
+    } else if (error.name === 'PaymentRequired') {
+      res.status(httpStatus.PAYMENT_REQUIRED).send({});
     }
     res.status(httpStatus.UNAUTHORIZED).send({});
   }

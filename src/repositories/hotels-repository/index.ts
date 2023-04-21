@@ -18,4 +18,12 @@ async function getHotels() {
   return await prisma.hotel.findMany({});
 }
 
-export default { getEnrollmentByUserId, getTicketByEnrollmentId, getHotels };
+async function getTicketType(ticketTypeId: number) {
+  return await prisma.ticketType.findFirst({
+    where: {
+      id: ticketTypeId,
+    },
+  });
+}
+
+export default { getEnrollmentByUserId, getTicketByEnrollmentId, getHotels, getTicketType };
