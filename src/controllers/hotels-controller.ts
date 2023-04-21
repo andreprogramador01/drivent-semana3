@@ -1,21 +1,16 @@
-import { Response } from 'express';
+import { NextFunction, Response } from 'express';
 import httpStatus from 'http-status';
 import { AuthenticatedRequest } from '@/middlewares';
 import hotelsService from '@/services/hotels-service';
 
-export async function getHotels(req: AuthenticatedRequest, res: Response) {
+export async function getHotels(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   const userId = req.userId as number;
 
   try {
     const hotels = await hotelsService.getHotels(userId);
-
+    console.log(hotels);
     res.status(httpStatus.OK).send(hotels);
   } catch (error) {
-    if (error.name === 'NotFoundError') {
-      res.status(httpStatus.NOT_FOUND).send({});
-    } else if (error.name === 'PaymentRequired') {
-      res.status(httpStatus.PAYMENT_REQUIRED).send({});
-    }
-    res.status(httpStatus.UNAUTHORIZED).send({});
+    next(error);
   }
 }
