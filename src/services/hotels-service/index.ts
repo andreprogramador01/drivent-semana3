@@ -8,7 +8,7 @@ async function getHotels(userId: number) {
   if (!ticket) throw notFoundError();
   const hotels = await hotelsRepository.getHotels();
 
-  if (!hotels) {
+  if (hotels.length === 0) {
     throw notFoundError();
   }
   const ticketType = await hotelsRepository.getTicketType(ticket.ticketTypeId);
