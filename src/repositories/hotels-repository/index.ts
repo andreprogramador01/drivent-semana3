@@ -12,6 +12,9 @@ async function getTicketByEnrollmentId(enrollmentId: number) {
     where: {
       enrollmentId,
     },
+    include: {
+      TicketType: true,
+    },
   });
 }
 async function getHotels() {

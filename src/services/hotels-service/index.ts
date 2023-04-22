@@ -3,17 +3,21 @@ import hotelsRepository from '@/repositories/hotels-repository';
 
 async function getHotels(userId: number) {
   const enrollment = await hotelsRepository.getEnrollmentByUserId(userId);
+  if (!enrollment) {
+    throw notFoundError();
+  }
+  const ticket = await hotelsRepository.getTicketByEnrollmentId(enrollment.id);
+  if (!ticket) {
+    throw notFoundError();
+  }
 
-  const ticket = await hotelsRepository.getTicketByEnrollmentId(enrollment.id as number);
+  //const ticketType = await hotelsRepository.getTicketType(ticket.ticketTypeId);
 
-  const hotels = await hotelsRepository.getHotels();
-
-  const ticketType = await hotelsRepository.getTicketType(ticket.ticketTypeId);
-
-  if (ticket.status !== 'PAID' || ticketType.includesHotel === false || ticketType.isRemote === true) {
+  if (ticket.status !== 'PAID' || ticket.TicketType.includesHotel === false || ticket.TicketType.isRemote === true) {
     throw paymentRequired();
   }
-  if (!enrollment || !ticket || hotels.length === 0) {
+  const hotels = await hotelsRepository.getHotels();
+  if (hotels.length === 0) {
     throw notFoundError();
   }
 
