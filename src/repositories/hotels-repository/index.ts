@@ -15,7 +15,6 @@ async function getTicketByEnrollmentId(enrollmentId: number) {
   });
 }
 async function getHotels() {
-  console.log(prisma.hotel.findMany({}));
   return await prisma.hotel.findMany({});
 }
 
