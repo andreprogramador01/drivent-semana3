@@ -1,14 +1,14 @@
 import { prisma } from '@/config';
 
 async function getEnrollmentByUserId(userId: number) {
-  return await prisma.enrollment.findFirst({
+  return prisma.enrollment.findFirst({
     where: {
       userId,
     },
   });
 }
 async function getTicketByEnrollmentId(enrollmentId: number) {
-  return await prisma.ticket.findFirst({
+  return prisma.ticket.findFirst({
     where: {
       enrollmentId,
     },
