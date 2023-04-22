@@ -22,7 +22,7 @@ async function getRooms(userId: number, hotelId: number) {
     throw notFoundError();
   }
 
-  return rooms;
+  return rooms[0];
 }
 const roomsService = { getRooms };
 
