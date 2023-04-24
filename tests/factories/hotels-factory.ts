@@ -1,7 +1,7 @@
 import faker from '@faker-js/faker';
 import { prisma } from '@/config';
 
-export async function createHotel() {
+export async function createNewHotel() {
   return prisma.hotel.create({
     data: {
       name: faker.name.firstName(),
@@ -9,7 +9,7 @@ export async function createHotel() {
     },
   });
 }
-export async function createRoom(hotelId: number) {
+export async function createNewRoom(hotelId: number) {
   return prisma.room.create({
     data: {
       name: faker.name.firstName(),

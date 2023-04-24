@@ -10,8 +10,8 @@ import {
   createTicketTypeIsRemote,
   createTicketTypeNotIncludesHotel,
   createTicketTypeWithHotel,
-  createHotel,
-  createRoom,
+  createNewHotel,
+  createNewRoom,
 } from '../factories';
 import { prisma } from '@/config';
 import app, { init } from '@/app';
@@ -103,7 +103,7 @@ describe('GET /hotels', () => {
     const token = await generateValidToken(user);
     const enrollment = await createEnrollmentWithAddress(user);
     const ticketType = await createTicketTypeWithHotel();
-    const hotel = await createHotel();
+    const hotel = await createNewHotel();
 
     const ticket = await createTicket(enrollment.id, ticketType.id, 'PAID');
     const response = await api.get('/hotels').set('Authorization', `Bearer ${token}`);
@@ -200,8 +200,8 @@ describe('GET /hotels/:hotelsId', () => {
     const token = await generateValidToken(user);
     const enrollment = await createEnrollmentWithAddress(user);
     const ticketType = await createTicketTypeWithHotel();
-    const hotel = await createHotel();
-    const room = await createRoom(hotel.id);
+    const hotel = await createNewHotel();
+    const room = await createNewRoom(hotel.id);
 
     const ticket = await createTicket(enrollment.id, ticketType.id, 'PAID');
     const response = await api.get(`/hotels/${hotel.id}`).set('Authorization', `Bearer ${token}`);
